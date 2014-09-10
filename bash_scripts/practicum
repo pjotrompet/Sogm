@@ -1,0 +1,27 @@
+#! /bin/bash
+
+if [ $# -lt 3 ]; then
+echo "$0: Geef een filepath, het aantal slices en de extensie"
+exit
+fi
+
+lengte=`soxi -s $1`
+blocksize=lengte/$2
+pt2=0
+pt3=pt2 + blocksize
+
+echo soxi $1 $3
+sleep 3
+FILENAME=`basename $1 $3`
+
+for (( pt2=0; pt2<=lengte; pt2 + pt1))
+do 
+echo sox $1 pt2 trim pt2 pt3
+done
+
+
+#trim = filename, punt1, punt2
+
+#sox oude f nw f trim punt 1 punt 2
+
+echo "Sliced succesvol!(BETA)"
