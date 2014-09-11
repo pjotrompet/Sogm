@@ -1,7 +1,7 @@
 #! /bin/bash
 
 if [ $# -lt 3 ]; then
-echo "$0: Geef een filepath, het aantal slices en de extensie"
+echo "$0: Geef een filepath, het aantal slices en de extensie(geen mp3)"
 exit
 fi
 
