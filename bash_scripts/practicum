@@ -6,9 +6,16 @@ exit
 fi
 
 lengte=`soxi -s $1`
-blocksize=lengte/$2
-pt2=0
-pt3=pt2 + blocksize
+blocksize=lengte/$2 #uitkomst van blocksize is hier letterlijk de tekst lengte / argument 2;
+                    #om de waarde van variabele lengte te krijgen: $lengte
+                    #Maar dan is de waarde van blocksize: [waarde van lengte]/[waarde van argument 2]
+                    #je moet een berekening gebruiken:
+                    # Ik heb het volgende gebruikt: (in het voorbeeld tel ik 2 bij 5 op en stop ik het in variabele 'i')
+                    # i=`echo "2+5" | bc`
+                    # wat gebeurt er: echo zend de tekst "2+5" uit en geeft deze als argumenten voor de functie bc (door het teken '|') en voert bc uit
+                    # door de backtics komt de uitkomst in de variabele
+pt2=0 #werkt wel
+pt3=pt2 + blocksize #tekst bij blocksize geld hier ook
 
 echo soxi $1 $3
 sleep 3
