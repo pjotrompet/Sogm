@@ -1,35 +1,35 @@
 #! /bin/bash
+#knipt audio file in het door te gebruiker aan te geven gelijke delen
+
 
 if [ $# -lt 3 ]; then
-echo "$0: Geef een filepath, het aantal slices en de extensie(geen mp3)"
+echo "$0:
+Geef een filepath
+(bij spaties als volgt 
+"~/user/audio file/file.wav" 
+dus geen backslash bij spatie!)
+
+het aantal slices en de extensie(geen mp3)"
 exit
 fi
 
-lengte=`soxi -s $1`
-blocksize=`echo $lengte / $2 | bc` #uitkomst van blocksize is hier letterlijk de tekst lengte / argument 2;
-                    #om de waarde van variabele lengte te krijgen: $lengte
-                    #Maar dan is de waarde van blocksize: [waarde van lengte]/[waarde van argument 2]
-                    #je moet een berekening gebruiken:
-                    # Ik heb het volgende gebruikt: (in het voorbeeld tel ik 2 bij 5 op en stop ik het in variabele 'i')
-                    # i=`echo "2+5" | bc`
-                    # wat gebeurt er: echo zend de tekst "2+5" uit en geeft deze als argumenten voor de functie bc (door het teken '|') en voert bc uit
-                    # door de backtics komt de uitkomst in de variabele
+FileName="$1"
+Slices=$2
+Ext=$3
+lengte=`soxi -s "${FileName}"`
+blocksize=`echo $lengte / $Slices | bc`
+pt2=0 
+pt3=`echo $pt2 + $blocksize | bc`
 
-pt2=0 #werkt wel
-pt3=`echo $pt2 + $blocksize | bc` #tekst bij blocksize geld hier ook
-
-echo soxi $1 $3
+echo soxi "${FileName}" $Ext
 sleep 3
-FILENAME=`basename $1 $3`
 
 for ((pt2 = 0; $pt2 <= $lengte; pt2 =`echo $pt2+$blocksize | bc` ))
 do 
-sox $1 $1${pt2}${3} trim ${pt2}s ${blocksize}s
+	sox "${FileName}" "${FileName}"${pt2}${Ext} trim ${pt2}s ${blocksize}s
 done
 
 
-#trim = filename, punt1, punt2
+echo "Sliced succesvol!"
 
-#sox oude f nw f trim punt 1 punt 2
-
-echo "Sliced succesvol!(BETA)"
+#Pjotr Lasschuit
