@@ -24,7 +24,7 @@ pt3=`echo $pt2 + $blocksize | bc`
 echo soxi "${FileName}" $Ext
 sleep 3
 
-for ((pt2 = 0; $pt2 <= $lengte; pt2 =`echo $pt2+$blocksize | bc` ))
+for ((pt2 = 0; $pt2 < $lengte; pt2 =`echo $pt2+$blocksize | bc` ))
 do 
 	sox "${FileName}" "${FileName}"${pt2}${Ext} trim ${pt2}s ${blocksize}s
 done
