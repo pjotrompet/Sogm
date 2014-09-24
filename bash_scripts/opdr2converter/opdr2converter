@@ -1,0 +1,27 @@
+#! /bin/bash
+
+if [ $# -lt 2 ]; then
+echo "$0:
+Geef een input formaat en een ouput formaat"
+exit
+fi
+
+
+DirName=${PWD##*/}
+InExt=$1
+OutExt=$2
+NewDir=${DirName}${OutExt}
+
+mkdir $NewDir
+
+
+for f in *.${InExt}; do
+echo $f
+ffmpeg -i $f `basename $f.$OutExt`
+mv $f.$OutExt $NewDir
+
+done
+
+
+
+
