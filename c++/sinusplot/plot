@@ -1,0 +1,7 @@
+# gnuplot script om 'data.txt' naar 'outplot.png' te exporteren
+
+plot "data.txt"
+set terminal png size 1000,1000 enhanced font "Helvetica,20"
+set output "outplot.png"
+replot
+quit

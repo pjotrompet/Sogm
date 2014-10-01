@@ -10,15 +10,15 @@ fi
 DirName=${PWD##*/}
 InExt=$1
 OutExt=$2
-NewDir=${DirName}${OutExt}
+NewDir="${DirName}${OutExt}"
 
-mkdir $NewDir
+mkdir "${NewDir}"
 
 
 for f in *.${InExt}; do
-echo $f
-ffmpeg -i $f `basename $f.$OutExt`
-mv $f.$OutExt $NewDir
+echo "${f}"
+ffmpeg -i "${f}" "`basename "${f}" .$InExt`.$OutExt"
+mv "`basename "${f}" .$InExt`.$OutExt" "${NewDir}"
 
 done
 
