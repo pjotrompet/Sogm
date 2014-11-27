@@ -3,9 +3,13 @@
 if [ $# -lt 2 ]; then
 echo "$0:
 Geef een input formaat en een ouput formaat"
+
 exit
 fi
 
+if (([ $1 == "wav"] || [$1 == "aif"] || [$1 == "dsd"]) &&
+    ([ $2 == "wav"] || [$2 == "aif"])|| [$2 == "dsd"])
+then
 
 DirName=${PWD##*/}
 InExt=$1
@@ -22,6 +26,7 @@ mv "`basename "${f}" .$InExt`.$OutExt" "${NewDir}"
 
 done
 
-
+else
+	echo "this file is not supported"
 
 

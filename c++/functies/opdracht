@@ -1,0 +1,22 @@
+- maak een Makefile waarmee je alle voorbeelden in één keer bouwt
+
+- maak een functie die twee getallen bij elkaar optelt en het resultaat
+  teruggeeft.
+  Roep de functie met verschillende getallencombinaties aan en print de
+  resultaten.
+  Parameters: twee getallen.
+
+- maak een functie die alle elementen van een array onder elkaar print met
+  het regelnummer voor elk element.
+  Parameters: een array en het aantal elementen.
+  Een array in een functie aangeven doe je als volgt:
+  void print_array(int a[]) {...}
+
+- maak een functie die het maximum van een array met getallen teruggeeft.
+  Roep de functie met verschillende arrays aan en print de resultaten.
+  Parameters: een array met getallen en het aantal getallen.
+
+- maak een functie die een array 1 plaats naar links roteert: het eerste
+  element schuift aan het eind weer naar binnen.
+  Roep de functie met verschillende arrays aan en print de resultaten.
+  Parameters: een array en het aantal elementen.
