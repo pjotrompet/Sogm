@@ -1,0 +1,17 @@
+<!DOCTYPE GraphicsSceneFaust>
+<SceneRoot>
+ <Scene sceneHeight="597,1799926757812" viewZoom="0,8838819265365601" sceneX="-726,1900024414062" sceneY="-397,1799926757812" sceneWidth="926,18994140625" viewX="-253,4275147787341" viewY="-141,4216042292043"/>
+ <Item DomFaustItemRectWidth="100" ItemX="-515,5" ItemY="10,89999961853027" ItemZ="10" DomFaustItemRectHeight="100"><![CDATA[process = *;]]></Item>
+ <Item DomFaustItemRectWidth="164" ItemX="-325,6700134277344" ItemY="-366,1499938964844" ItemZ="9" file="/home/pjotr/Faust/Reverb/timeGate.dsp" DomFaustItemRectHeight="164"/>
+ <Item DomFaustItemRectWidth="69" ItemX="-699,6900024414062" ItemY="-206,5299987792969" ItemZ="8" file="/home/pjotr/Faust/Reverb/frequentiedependenciesding.dsp" DomFaustItemRectHeight="69"/>
+ <Item DomFaustItemRectWidth="100" ItemX="-359,7999877929688" ItemY="-150,5" ItemZ="7" file="/home/pjotr/Faust/Reverb/1stReverb.dsp" DomFaustItemRectHeight="100"/>
+ <Item DomFaustItemRectWidth="237" ItemX="-606,5900268554688" ItemY="-234,8899993896484" ItemZ="5" file="/home/pjotr/Faust/Reverb/1StReverb(shortstuffBeta).dsp" DomFaustItemRectHeight="237"/>
+ <Item DomFaustItemRectWidth="100" ItemX="-170,5767974853516" ItemY="-197,4468536376953" ItemZ="4" file="/home/pjotr/Faust/bigger then/BT.dsp" DomFaustItemRectHeight="100"/>
+ <Item DomFaustItemRectWidth="100" ItemX="70,38999938964844" ItemY="-22,75" ItemZ="3" file="/home/pjotr/Faust/lol/amlol.dsp" DomFaustItemRectHeight="100"/>
+ <Item DomFaustItemRectWidth="100" ItemX="-243,6300048828125" ItemY="-54,5099983215332" ItemZ="2" file="/home/pjotr/Faust/lol/untitled.dsp" DomFaustItemRectHeight="100"/>
+ <Item DomFaustItemRectWidth="100" ItemX="31,76000022888184" ItemY="-108,7756729125977" ItemZ="1" DomFaustItemRectHeight="100"><![CDATA[import ("math.lib");
+A =_<:(_+(_@1));
+B=_;
+process = A	;]]></Item>
+ <Item DomFaustItemRectWidth="162" ItemX="-129,6399993896484" ItemY="-83,37999725341797" ItemZ="0" file="/home/pjotr/Faust/Sinewaveexperiments/Sinewaveoscillator.dsp" DomFaustItemRectHeight="162"/>
+</SceneRoot>

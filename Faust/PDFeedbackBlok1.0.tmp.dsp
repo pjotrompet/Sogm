@@ -1,0 +1,1 @@
+process = par (i,2,_@hslider("sDel", 60, 1, 2206, 0.1):_*0.1);

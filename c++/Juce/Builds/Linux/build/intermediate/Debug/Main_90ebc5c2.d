@@ -443,4 +443,5 @@ build/intermediate/Debug/Main_90ebc5c2.o: ../../Source/Main.cpp \
  ../../Source/../JuceLibraryCode/modules/juce_video/../juce_gui_extra/juce_gui_extra.h \
  ../../Source/../JuceLibraryCode/modules/juce_video/playback/juce_DirectShowComponent.h \
  ../../Source/../JuceLibraryCode/modules/juce_video/playback/juce_QuickTimeMovieComponent.h \
- ../../Source/../JuceLibraryCode/modules/juce_video/capture/juce_CameraDevice.h
+ ../../Source/../JuceLibraryCode/modules/juce_video/capture/juce_CameraDevice.h \
+ ../../Source/MainComponent.h

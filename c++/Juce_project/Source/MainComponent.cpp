@@ -10,6 +10,9 @@
 
 
 //==============================================================================
+
+
+
 MainContentComponent::MainContentComponent()
 {
     	button1 = new TextButton ("button 1");
@@ -26,7 +29,7 @@ void MainContentComponent::paint (Graphics& g)
 
     g.setFont (Font (16.0f));
     g.setColour (Colours::red);
-    g.drawText ("Hello World! lalalala", getLocalBounds(), Justification::centred, true);
+    g.drawText ("Hello World! lalalala", 200, 400, 200,100, Justification::centred, false);
 }
 
 void MainContentComponent::resized()

@@ -1,0 +1,8 @@
+<!DOCTYPE GraphicsSceneFaust>
+<SceneRoot>
+ <Scene sceneHeight="576,6799926757812" viewZoom="3,535532474517822" sceneX="-200" sceneY="-245,1799926757812" sceneWidth="539,5" viewX="65,33669303419533" viewY="189,7875369088531"/>
+ <Item DomFaustItemRectWidth="357" ItemX="-141,6000061035156" ItemY="-218,6799926757812" ItemZ="0" DomFaustItemRectHeight="357"><![CDATA[a=_+_;
+c=_;
+b(x)=_@(x);
+process = _<:sum(i, 20, (a:b(i))~c)/20;]]></Item>
+</SceneRoot>
