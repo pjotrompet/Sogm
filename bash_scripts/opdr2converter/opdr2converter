@@ -7,8 +7,8 @@ Geef een input formaat en een ouput formaat"
 exit
 fi
 
-if (([ $1 == "wav" ] || [ $1 == "aif" ] || [ $1 == "dsd" ]) &&
-    ([ $2 == "wav" ] || [ $2 == "aif" ] || [ $2 == "dsd" ]))
+if (([ $1 == "wav" ] || [ $1 == "aif" ] || [ $1 == "flac" ]) &&
+    ([ $2 == "wav" ] || [ $2 == "aif" ] || [ $2 == "flac" ]))
 then
 
 DirName=${PWD##*/}
