@@ -12,9 +12,14 @@ int newarray[lengte];
 	newarray[i-1] = array[i];
 }
 	for (int i=0; i < lengte ; i++) {
-	cout << newarray[i] << endl;
+	cout << "newarray: " << newarray[i] << endl;
 	}
-
+	
+	for (int i=0; i < lengte; i++)
+	{
+		array[i]=newarray[i];
+		cout << "array: " << array[i] << endl;
+	}
 };
 
 int main() {

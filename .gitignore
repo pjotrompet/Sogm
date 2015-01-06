@@ -7,3 +7,4 @@ c++/Juce_project/
 c++/supercjoolejuceproject/
 AudioWrapperJUCE/
 of0.8.4/
+*.o
