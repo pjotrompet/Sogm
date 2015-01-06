@@ -2,20 +2,33 @@
 
 using namespace std;
 
+short changevalue(short x)
+	{
+		x = x+1;
+		return x;
+	};
+short* changevaluepoint(short* x)
+	{
+		*x = *x+1;
+		return x;//hoe de plek waar de pointer naar wijst terug te geven?
+	}
+
 
 int main()
 {
 
-unsigned short eenvariabele = 2;
-unsigned short *eenvariabelepointer;
-unsigned short tweedevariabele = 0;
+short getal = 4;
+short *pointergetal;
+pointergetal = &getal;
 
-eenvariabelepointer = &eenvariabele;
+cout << "het getal "<< getal << endl;
+cout << "pointer naar het getal " << *pointergetal << endl;
+cout << "bewerking met het getal " << changevalue(getal) << endl;
+cout << "het getal " << getal << endl;
+cout << "bewerking met de pointer " << changevaluepoint(pointergetal)<< endl; //(geen pointer?!)
+cout << "het getal " << getal << endl;
+};
 
-cout << "eenvariabele "<< eenvariabele << endl;
-cout << "pointer naar eenvariabele " << *eenvariabelepointer << endl;
-cout << "tweedevariabele " << tweedevariabele << endl;
-cout << "bewerking = .... " << endl;
 
 
 
@@ -43,6 +56,9 @@ cout << "bewerking = .... " << endl;
   *anotheryearpointer = 2015;
   cout << "Inhoud van de variabele year: " << year << endl;
   cout << "Inhoud van waar de pointer yearpointer naar wijst: " << *yearpointer << endl;
-	*/
+
 	
 } // main()
+
+*/
+
