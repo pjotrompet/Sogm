@@ -2,7 +2,7 @@
 #define _AMP_H
 using namespace std;
 
-#define bufsize 64
+#define bufsize 10
 
 class Amplifier
 {
@@ -12,7 +12,7 @@ float AmpFactor;
 public:
  void setAmpfactor(float AmpFactor);
  float getAmpfactor();
- float* process(float audioin[bufsize]);
+ void process(float audioin[bufsize]);
 };
 
-#endif	
+#endif

@@ -1,3 +1,6 @@
+#include <cstdlib>
+#include <math.h>
+#include <string>
 #include <iostream>
 #include <stdio.h>
 #include <sndfile.h>
@@ -7,53 +10,52 @@
 using namespace std;
 
 
+
+SF_INFO sfInfo;
+SNDFILE* inFile;
+SNDFILE* outFile;
+char* path;
+string outName;
+string extension;
+float gain;
+int sampleRate;
+unsigned long int channels;
+unsigned long int numFrames;
+unsigned long int filesize;
+float* filepointer;
+
+
+
 enum{ARG_NAME = 0, ARG_PATH, ARG_GAIN, NUM_ARGS};
 
-
-int compute(int file[], int filesize)
+float compute(float file[], long int filesize, float gain)
 {
-	int bewerkfile[filesize];
-	int n=0;
-	int tel=0;
-	int factor=0;		
+	float n=0;
+	int tel=1;
+	float factor=0;
 	while (tel < filesize)
 	{
-	if (bewerkfile[tel] > n)	
-	n = bewerkfile[tel];
-	tel++
+	if ((fabs(file[tel])) > n)
+		n = file[tel];
+		tel++;
+//	else
+//		tel++;
 	}
-	factor = 1/n;
+	factor = gain/n;
+	cout << factor << endl;
 	return factor;
 }
 
-int process(int file[filesize])
+float* process(float* file, long int filesize, float gain)
 {
-		int normArray[filesize] = file[0]
-		for(int i tel=0; i < filesize i++)
+		//filepointer= &file[filesize];
+		float normFact=compute(file , filesize, gain);
+		float* normArray;
+		for(long int i=0; i < filesize; i++)
 		{
-			normArray[i] = file[i*compute(file[filesize])]
+			normArray[i] = (*file + i)*normFact;
 		}
-		return normArray[]
-	
-
-}
-
-
-
-
-int main(int argc, char* argv[]) 
-{
-	if (argc != NUM_ARGS || atof(argv[ARG_GAIN]) <= 0 ||atof(argv[ARG_GAIN]) > 1 ) 
-{
-		cout << "Give: \n"
-		"- file path \n"
-		"- gain(0 < gain > 1)" << endl;
-		return -1;
-}
-SF_INFO info;
-SNDFILE* InFile;
-InFile= sf_open(argv[ARG_PATH], SFM_READ,&info );
-
+		return &normArray[0];
 }
 
 
@@ -61,4 +63,46 @@ InFile= sf_open(argv[ARG_PATH], SFM_READ,&info );
 
 
 
+int main(int argc, char* argv[]) {
+	if (argc != NUM_ARGS || atof(argv[ARG_GAIN]) <= 0 ||
+		atof(argv[ARG_GAIN]) > 1 ) {
+			cout << "Give: \n"
+			"- file path \n"
+			"- gain(0 < gain < 1)" << endl;
+			return -1;
+		}
+		path = argv[ARG_PATH];
+		gain = atof(argv[ARG_GAIN]);
+		inFile = sf_open(path, SFM_READ, &sfInfo);
+		if(inFile == NULL) {
+			cout << "Error opening file" << endl;
+			return -1;
+		}
+		sampleRate = sfInfo.samplerate;
+		channels = sfInfo.channels;
+		numFrames = sfInfo.frames;
+		cout << "Gain: " << gain << endl;
+		cout << "Length: " << float(numFrames/sampleRate) << "s" << endl;
+		cout << "Channels: " << channels << endl;
+		cout << "Samplerate: " << sampleRate << endl;
+		filesize = channels*numFrames;
+		float buffer[filesize];
+		cout << "hoi" << endl;
+		float* normBuffer;
+		sf_readf_float(inFile, buffer, numFrames);
 
+
+		normBuffer = process(buffer, filesize, gain);
+
+		outName = path;
+		unsigned find_ext = outName.find_last_of(".");
+		extension = outName.substr(find_ext);
+		outName = outName.substr(0,find_ext);
+		outName = outName + "_norm" + extension;
+		outFile = sf_open(outName.c_str(), SFM_WRITE, &sfInfo);
+		sf_writef_float(outFile, normBuffer, numFrames);
+		cout << "Normalised file: " << outName << endl;
+		sf_close(inFile);
+		sf_close(outFile);
+
+	}

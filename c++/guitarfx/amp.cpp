@@ -10,13 +10,12 @@ float Amplifier::getAmpfactor()
 	return AmpFactor;
 }
 
-float* Amplifier::process(float audioin[bufsize])
+void Amplifier::process(float audioin[bufsize])
 {
 	Amplifier Amp;
 	for(int i = 0; i<bufsize; i++)
 	{
 		audioin[i] = audioin[i]*Amp.getAmpfactor();
-		
+
 	};
 };
-

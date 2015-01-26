@@ -10,11 +10,16 @@ float moddistortion::getDistorFact()
 {
 	return DistorFact;
 }
-float* moddistortion::process(float audioin[bufsize])
+void moddistortion::process(float audioin[bufsize])
 {
 	moddistortion moddist;
 	for(int i = 0; i<bufsize; i++)
 	{
-		audioin[i] = ((audioin[i] > moddist.getDistorFact())*audioin[i]);
+		audioin[i]=fmod(audioin[i]+1,getDistorFact()+1)-1;
 	};
+
+	for(int i = 0; i<bufsize; i++)
+		{
+			audioin[i]=audioin[i]*moddist.getAmpfactor();
+		};
 };
