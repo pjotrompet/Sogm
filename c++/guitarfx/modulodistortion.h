@@ -7,7 +7,7 @@ using namespace std;
 class moddistortion : public Amplifier
 {
 private:
-float audioin[bufsize];
+//float audioin[bufsize];
 float DistorFact;
 public:
 void setDistorFact(float DistorFact);
