@@ -1,0 +1,11 @@
+*.aif
+*.swp
+JuceCurrent/
+JuceNewVersion/
+c++/Juce/
+c++/Juce_project/
+c++/supercjoolejuceproject/
+AudioWrapperJUCE/
+of0.8.4/
+*.o
+*.tmp*

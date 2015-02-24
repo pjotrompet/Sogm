@@ -41,7 +41,7 @@ float compute(float file[], long int filesize, float gain)
 //	else
 //		tel++;
 	}
-	if (maxValue == 0) return 1; 
+	if (maxValue == 0) return 1;
 	factor = gain/maxValue;
 	cout << factor << endl;
 	return factor;

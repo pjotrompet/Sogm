@@ -1,0 +1,12 @@
+lisp aantekening
+
+- 1 superclass(True of Nil)
+- initialiser (contructor /destructorin c)
+- in lisp functies =>
+
+(defgeneric ..) //eerst definieren, daarna aanroepen
+
+
+-> eerst ontwerpen
+-> daarna aanroepen
+-> goede initiele waardes, gebruiksvriendelijkheid.

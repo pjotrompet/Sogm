@@ -8,3 +8,5 @@ c++/supercjoolejuceproject/
 AudioWrapperJUCE/
 of0.8.4/
 *.o
+*.tmp*
+*.out
