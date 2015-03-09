@@ -11,7 +11,7 @@ dLength = hslider("delay length", 10, 0.5, 10, 0.1);
 SR = fconstant(int fSamplingFreq, <math.h>);
 counter = +(1)%delayLength~_; // to iterate through the delay line
 delayBufferSize = 480000;
-maxN = 128;
+maxN = 80;//should be a multiple of 8
 
 //Granular synth variables
 grainLength = int(SR*gLength);
@@ -53,4 +53,4 @@ buffer(write,read,x) = rwtable(delayBufferSize, 0.0, write%delayLength, x, read%
 //sin wave for windowing
 window(i) = sin(2*3.14159*grainCounter(i)/(grainLength-1));
 
-process = _<: par(i,maxN,buffer(counter, grainPosition(i))*window(i)*(i<N)/N) :> _,_,_,_,_,_,_,_,_,_,_,_;
+process = _<: par(i,maxN,buffer(counter, grainPosition(i))*window(i)*(i<N)/N) :> _,_,_,_,_,_,_,_;

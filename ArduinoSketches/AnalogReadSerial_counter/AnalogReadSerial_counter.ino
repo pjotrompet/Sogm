@@ -7,24 +7,28 @@
  */
 
 // the setup routine runs once when you press reset:
- int counter = 100; //counter as test when no sensors are connected(initial)
+ int counter = 90; //counter as test when no sensors are connected(initial)
 void setup() {
-  // initialize serial communication at 9600 bits per second:
-  Serial.begin(9600);
+  // initialize serial communication at 115200 bits per second:
+  Serial.begin(215200);
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
   // read the input on analog pin 0:
-  float sensorValue = analogRead(A0);
-  
-  counter = counter; //make it count
-  if(counter > 10000){
-    counter = 0;} //endif
+  int sensorValue1 = analogRead(A0);
+  int sensorValue2 = analogRead(A1);
+  int sensors[]={sensorValue1, sensorValue2};
+  counter = counter + 1; //make it count
+  if(counter > 100){
+    counter = 90;} //endif
     
   // print out the value you read:
-  Serial.write(counter);
+  //Serial.write(sensorValue1);
+  Serial.write(sensorValue1);
+  Serial.write(001);
+  Serial.write(sensorValue2);
   //Serial.println(sensorValue);
-  Serial.println(counter);
+  //Serial.print(DEC <- 97);
   delay(1);        // delay in between reads for stability
 }

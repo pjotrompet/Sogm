@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="generator" content="http://www.nongnu.org/elyxer/"/>
+<meta name="create-date" content="2015-03-02"/>
+<link rel="stylesheet" href="http://elyxer.nongnu.org/lyx.css" type="text/css" media="all"/>
+<title>Plannen en Planning SOGM blok 2</title>
+</head>
+<body>
+<div id="globalWrapper">
+<h1 class="title">
+Plannen en Planning SOGM blok 2
+</h1>
+<h2 class="author">
+Pjotr Lasschuit 
+</h2>
+<div class="Address">
+HKU MT
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--1"></a>Plannen:
+</h2>
+<div class="Unindented">
+Mijn plan is om me tijdens dit blok bezig te gaan houden met de implantatie van de tijdens het vorige blok KO geprogrammeerde <a class="URL" href="http://student-kmt.hku.nl/~pjotr/FaustPrograms/">FAUST-code</a> in de UDOO. Ik ga hiervoor c++ gebruiken en de gui weglaten om de rekenkracht van de UDOO zoveel mogelijk te benutten.
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--2"></a>Wat moet er gebeuren?
+</h2>
+<div class="Paragraph-">
+<a class="toc" name="toc-Paragraph--1"></a>Aansturing:
+</div>
+<div class="Unindented">
+De aansturing ga ik doen via de Arduino, dit biedt de mogelijkheid om de controller zo persoonlijk mogelijk te maken. Ik wil dit graag omdat ik de software in de toekomst eventueel ook voor andere toegankelijk wil maken, maar ook omdat ik sensoren wil uitlezen als controle middel voor mijzelf.
+</div>
+<div class="Paragraph-">
+<a class="toc" name="toc-Paragraph--2"></a>Core:
+</div>
+<div class="Unindented">
+De implantatie van de FAUST-code is te bereiken met een wrapper. FAUST geeft namelijk zelf c++ code terug. Deze code is echter alleen maar berekening en GUI elemtenten. De audio call-back moet er dus in en de GUI moet er uit gehaald worden.In plaats van de GUI wil ik een terminal app die listener heeft die op een array wacht waar de variabelen in staan die de FAUST code nodig heeft.
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--3"></a>Planning
+</h2>
+<div class="Unindented">
+10-02-2015
+</div>
+<div class="Indented">
+Research doen naar uiteindelijke aanpak<br/>
+17-02-2015
+</div>
+<div class="Indented">
+Arduino uitlezen met c++ (testcase met 2 sensoren)<br/>
+24-02-2015
+</div>
+<div class="Indented">
+Terminal executable wrapper voor FAUST/Research doen: wat is een compiler en hoe zit de FAUST compiler in 
+</div>
+<div class="Indented">
+elkaar?<br/>
+03-03-2015
+</div>
+<div class="Indented">
+Terminal executable wrapper voor FAUST<br/>
+07-03-2015
+</div>
+<div class="Indented">
+Kopperling tussen Arduino programma en FAUST terminal executable.<br/>
+
+</div>
+<div class="Indented">
+<p><br/>
+</p>
+
+</div>
+<h1 class="Part-">
+<a class="toc" name="toc-Part--I"></a>Written Code
+</h1>
+<h1 class="Section-">
+<a class="toc" name="toc-Section--1"></a>Communication
+</h1>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--4"></a>Code that reads from the serial &ldquo;file&rdquo; (Nearly finished) :
+</h2>
+<pre>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <cerrno>
+#include <unistd.h>
+using namespace std;
+
+int main()
+{
+    unsigned char[2] sensorarray;
+    unsigned char f;
+    unsigned char test;
+    FILE *file;
+    file = fopen("/dev/ttyACM0","rb+");  //Opening device file
+    long long i = 0;
+    for(i = 0 ; i < 1000 ; i){
+      fscanf(file,"%c", &f); //hopefully reading? from the file
+        if(f != test){
+        //fprintf(file,"%c,','); //To separate digit
+        unsigned short out = f;
+        printf("result: %i \n", out);
+        usleep(1);
+        test=f;
+      }//if
+      //else{printf("no change \n");}//else
+    }//for
+    fclose(file);
+}
+
+</pre>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--5"></a>Arduino Code that writes to the serial &ldquo;file&rdquo; (TestFile finished):
+</h2>
+<div class="Unindented">
+
+</div>
+<pre>
+/*
+  AnalogReadSerial
+  Reads an analog input on pin 0, prints the result to the serial monitor.
+  Attach the center pin of a potentiometer to pin A0, and the outside pins to +5V and ground.
+ 
+ This example code is in the public domain.
+ */
+
+// the setup routine runs once when you press reset:
+ int counter = 90; //counter as test when no sensors are connected(initial)
+void setup() {
+  // initialize serial communication at 115200 bits per second:
+  Serial.begin(215200);
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  // read the input on analog pin 0:
+  int sensorValue1 = analogRead(A0);
+  int sensorValue2 = analogRead(A1);
+  int sensors[]={sensorValue1, sensorValue2};
+  counter = counter + 1; //make it count
+  if(counter > 100){
+    counter = 90;} //endif
+    
+  // print out the value you read:
+  //Serial.write(sensorValue1);
+  Serial.write(sensorValue1);
+  Serial.write(001);
+  Serial.write(sensorValue2);
+  //Serial.println(sensorValue);
+  //Serial.print(DEC <- 97);
+  delay(1);        // delay in between reads for stability
+}
+
+</pre>
+<div class="Paragraph-">
+<a class="toc" name="toc-Paragraph--3"></a>This is code will later be modified for udoo and arduino due and instead of a counter sensor reading.
+</div>
+<h1 class="Section-">
+<a class="toc" name="toc-Section--2"></a>Wrapper
+</h1>
+<div class="Unindented">
+I have decided to take as a base the alsaconsole Faust converter. This is a makefile and it’s using several scripts and c++ files to link with the c++ code that comes from faust, in the makefile Faust used. At the moment I am still researching this architecture 
+</div>
+<h1 class="Section-">
+<a class="toc" name="toc-Section--3"></a>Faust and other DSP Files
+</h1>
+<div class="Unindented">
+-&gt; more to come
+</div>
+
+<hr class="footer"/>
+<div class="footer" id="generated-by">
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.5 (2013-03-10)</a> on <span class="create-date">2015-03-02T22:48:40.265633</span>
+</div>
+</div>
+</body>
+</html>

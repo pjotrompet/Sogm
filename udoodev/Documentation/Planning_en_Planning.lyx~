@@ -39,6 +39,11 @@
 \paperorientation portrait
 \suppress_date false
 \use_refstyle 1
+\branch testbranch
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
 \index Index
 \shortcut idx
 \color #008000
@@ -172,7 +177,11 @@ Kopperling tussen Arduino programma en FAUST terminal executable.
 Written Code
 \end_layout
 
-\begin_layout Standard
+\begin_layout Section*
+Communication
+\end_layout
+
+\begin_layout Subsection*
 Code that reads from the serial 
 \begin_inset Quotes eld
 \end_inset
@@ -185,8 +194,12 @@ file
 \end_layout
 
 \begin_layout Standard
+\begin_inset Branch testbranch
+status open
+
+\begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand lstinputlisting
+LatexCommand verbatiminput
 filename "/home/pjotr/sogm/udoodev/carduino/newReadSerial.cpp"
 lstparams "caption={written c++ Code for arduino},label={Code}"
 
@@ -195,7 +208,12 @@ lstparams "caption={written c++ Code for arduino},label={Code}"
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
 Arduino Code that writes to the serial 
 \begin_inset Quotes eld
 \end_inset
@@ -208,7 +226,35 @@ file
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand verbatiminput
+filename "/home/pjotr/sogm/udoodev/arduinocplusplus/AnalogReadSerial_counter/AnalogReadSerial_counter.ino"
+lstparams "caption={Arduino Code that writes to the serial port/file},label={Code}"
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+This is code will later be modified for udoo and arduino due and instead
+ of a counter sensor reading.
+\end_layout
+
+\begin_layout Section*
+Wrapper
+\end_layout
+
+\begin_layout Standard
+-> more to come
+\end_layout
+
+\begin_layout Section*
+Faust and other DSP Files
+\end_layout
+
+\begin_layout Standard
+-> more to come
 \end_layout
 
 \end_body

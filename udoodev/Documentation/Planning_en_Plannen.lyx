@@ -39,6 +39,11 @@
 \paperorientation portrait
 \suppress_date false
 \use_refstyle 1
+\branch testbranch
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
 \index Index
 \shortcut idx
 \color #008000
@@ -79,7 +84,15 @@ Plannen:
 
 \begin_layout Standard
 Mijn plan is om me tijdens dit blok bezig te gaan houden met de implantatie
- van de tijdens het vorige blok KO geprogrammeerde FAUST-code in de UDOO.
+ van de tijdens het vorige blok KO geprogrammeerde 
+\begin_inset CommandInset href
+LatexCommand href
+name "FAUST-code"
+target "http://student-kmt.hku.nl/~pjotr/FaustPrograms/"
+
+\end_inset
+
+ in de UDOO.
  Ik ga hiervoor c++ gebruiken en de gui weglaten om de rekenkracht van de
  UDOO zoveel mogelijk te benutten.
 \end_layout
@@ -138,7 +151,12 @@ Arduino uitlezen met c++ (testcase met 2 sensoren)
 \end_layout
 
 \begin_layout Standard
-Terminal executable wrapper voor FAUST
+Terminal executable wrapper voor FAUST/Research doen: wat is een compiler
+ en hoe zit de FAUST compiler in 
+\end_layout
+
+\begin_layout Standard
+elkaar?
 \begin_inset Newline newline
 \end_inset
 
@@ -168,14 +186,34 @@ Kopperling tussen Arduino programma en FAUST terminal executable.
 
 \end_layout
 
-\begin_layout Title
+\begin_layout Part*
 Written Code
 \end_layout
 
+\begin_layout Section*
+Communication
+\end_layout
+
+\begin_layout Subsection*
+Code that reads from the serial 
+\begin_inset Quotes eld
+\end_inset
+
+file
+\begin_inset Quotes erd
+\end_inset
+
+ (Nearly finished) :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Branch testbranch
+status open
+
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand lstinputlisting
-filename "/home/pjotr/sogm/udoodev/carduino/newReadSerial.cpp"
+LatexCommand verbatiminput
+filename "/home/pjotr/sogm/udoodev/carduino/ReadSerialWerkt_lossesensorenachterelkaargeenarray.cpp"
 lstparams "caption={written c++ Code for arduino},label={Code}"
 
 \end_inset
@@ -183,8 +221,56 @@ lstparams "caption={written c++ Code for arduino},label={Code}"
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
 
+
+\end_layout
+
+\begin_layout Subsection*
+Arduino Code that writes to the serial 
+\begin_inset Quotes eld
+\end_inset
+
+file
+\begin_inset Quotes erd
+\end_inset
+
+ (TestFile finished):
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand verbatiminput
+filename "/home/pjotr/sogm/ArduinoSketches/AnalogReadSerial_counter/AnalogReadSerial_counter.ino"
+lstparams "caption={Arduino Code that writes to the serial port/file},label={Code}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+This is code will later be modified for udoo and arduino due and instead
+ of a counter sensor reading.
+\end_layout
+
+\begin_layout Section*
+Wrapper
+\end_layout
+
+\begin_layout Standard
+I have decided to take as a base the alsaconsole Faust converter.
+ This is a makefile and it's using several scripts and c++ files to link
+ with the c++ code that comes from faust, in the makefile Faust used.
+ At the moment I am still researching this architecture 
+\end_layout
+
+\begin_layout Section*
+Faust and other DSP Files
+\end_layout
+
+\begin_layout Standard
+-> more to come
 \end_layout
 
 \end_body

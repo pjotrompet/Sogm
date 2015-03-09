@@ -1,0 +1,115 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+</style>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+
+
+
+<script>
+
+var isWebKitAudio = (typeof (webkitAudioContext) !== "undefined");
+var audio_context = (isWebKitAudio) ? new webkitAudioContext() : new AudioContext();
+var audio_input = null;
+var Revtail8 = null;
+var faustsvg = null;
+
+function changeBufferSize(buffer_size)
+{
+    var new_buffer_size = buffer_size.options[buffer_size.selectedIndex].value;
+    console.log(new_buffer_size);
+    startNewRevtail8(new_buffer_size);
+}
+ 
+// Audio input handling
+
+function activateAudioInput()
+{
+    if (!navigator.getUserMedia) {
+        navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    }
+   
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({audio:true}, getDevice, function(e) {
+                alert('Error getting audio input');
+                console.log(e);
+        });
+    } else {
+        alert('Audio input API not available');
+    }
+}
+
+function getDevice(device) 
+{
+    // Create an AudioNode from the stream.
+    audio_input = audio_context.createMediaStreamSource(device);
+    
+    // Connect it to the destination.
+    audio_input.connect(Revtail8.scriptProcessor);
+}
+
+function startRevtail8Aux(buffer_size) 
+{
+    console.log("startRevtail8 %d", buffer_size);
+    if (Revtail8) {
+        if (audio_input) {
+            audio_input.disconnect(Revtail8.scriptProcessor);
+        }
+        _f4u$t.hard_delete(faustsvg);
+        Revtail8.stop();
+        Revtail8.destroy();
+    }
+    Revtail8 = faust.Revtail8(audio_context, buffer_size);
+    if (Revtail8.getNumInputs() > 0) {
+        activateAudioInput();
+    }
+    Revtail8.start();
+    console.log(Revtail8.json());
+    console.log(Revtail8.controls());
+    
+    // kludge...ideally, this needs to not be part of the imported JS
+    _f4u$t.main_loop = function() {}
+    
+    faustsvg = $('<div />');
+    $('body').append(faustsvg);
+    var handler = _f4u$t.main(Revtail8.json(), faustsvg, Revtail8.setValue);
+    Revtail8.setHandler(handler);
+}
+
+function startRevtail8() 
+{
+    startRevtail8Aux(1024);
+}
+
+function startNewRevtail8(buffer_size) 
+{
+    startRevtail8Aux(buffer_size);
+}
+
+// General
+
+$(startRevtail8);
+
+</script>
+
+<P>
+<center>
+<form method="POST" name="menu" >
+  <select name="selectedBuffer" 
+    onChange="changeBufferSize(this.form.selectedBuffer)">
+    <option value = 256> 256 </option>
+    <option value = 512> 512 </option>
+    <option selected value = 1024> 1024 </option>
+    <option value = 2048> 2048 </option>
+    <option value = 4096> 4096 </option>
+    <option value = 8192> 8192 </option>
+  </select>
+</form>
+</center>
+
+</body>
+</html>

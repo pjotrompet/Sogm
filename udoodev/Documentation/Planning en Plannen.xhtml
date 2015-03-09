@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/2001/REC-MathML2-20010221/dtd/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="GENERATOR" content="LyX 2.0.6" />
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<title>Plannen en Planning SOGM blok 2</title>
+
+<!-- Text Class Preamble -->
+<style type="text/css">
+div.toc {
+margin: 2em 0em;
+border-style: solid;
+border-width: 2px 0px;
+padding: 1em 0em;
+}
+div.tochead { font-size: x-large; font-weight: bold; }
+div.lyxtoc-0 {
+margin: 2em 0em 0em 0em;
+font-size: xx-large;
+font-weight: bold;
+}
+div.lyxtoc-1 {
+margin: 1em 0em 0em 0em;
+font-size: x-large;
+font-weight: bold;
+}
+div.lyxtoc-2 {
+margin: 0em 0em 0em 1em;
+font-size: large;
+font-weight: normal;
+}
+div.lyxtoc-3 { margin: 0em 0em 0em 0.5em; font-size: medium; }
+div.lyxtoc-4 { margin: 0em 0em 0em 0.5em; }
+div.lyxtoc-5 { margin: 0em 0em 0em 0.5em; }
+div.lyxtoc-6 { margin: 0em 0em 0em 0.5em; }
+a.tocentry {
+text-decoration: none;
+color: black;
+}
+a.tocentry:visited { color: black; }
+a.tocarrow {
+font-weight: bold;
+text-decoration: none;
+color: #909090;
+}
+a.tocarrow:visited { color: #C0C0C0; }
+</style>
+
+<!-- Preamble Snippets -->
+
+<!-- Layout-provided Styles -->
+<style type='text/css'>
+h1.title {
+font-size: x-large;
+margin-bottom: 1ex;
+text-align: center;
+
+}
+div.author {
+font-size: large;
+margin-top: 1.3ex;
+margin-bottom: 0.7ex;
+text-align: center;
+
+}
+div.address {
+margin-bottom: 1.5ex;
+text-align: left;
+
+}
+h3.subsection_ {
+font-weight: bold;
+font-size: large;
+margin-top: 0.9ex;
+margin-bottom: 0.5ex;
+text-align: left;
+
+}
+div.standard {
+margin-bottom: 2ex;
+}
+h4.paragraph_ {
+font-weight: bold;
+font-size: medium;
+margin-top: 0.4ex;
+text-align: left;
+
+}
+h1.part_ {
+font-weight: bold;
+font-size: x-large;
+margin-top: 2ex;
+margin-bottom: 1.5ex;
+text-align: left;
+
+}
+h2.section_ {
+font-weight: bold;
+font-size: x-large;
+margin-top: 1.3ex;
+margin-bottom: 0.7ex;
+text-align: left;
+
+}
+</style>
+</head>
+<body>
+<h1 class="title"><a id='magicparlabel-3' />
+Plannen en Planning SOGM blok 2</h1>
+<div class="author"><a id='magicparlabel-4' />
+Pjotr Lasschuit </div>
+<div class="address"><a id='magicparlabel-5' />
+HKU MT</div>
+<h3 class="subsection_"><a id='magicparlabel-6' />
+Plannen:</h3>
+<div class="standard"><a id='magicparlabel-7' />
+Mijn plan is om me tijdens dit blok bezig te gaan houden met de implantatie van de tijdens het vorige blok KO geprogrammeerde <a href="http://student-kmt.hku.nl/~pjotr/FaustPrograms/">FAUST-code</a> in de UDOO. Ik ga hiervoor c++ gebruiken en de gui weglaten om de rekenkracht van de UDOO zoveel mogelijk te benutten.</div>
+<h3 class="subsection_"><a id='magicparlabel-8' />
+Wat moet er gebeuren?</h3>
+<h4 class="paragraph_"><a id='magicparlabel-9' />
+Aansturing:</h4>
+<div class="standard"><a id='magicparlabel-10' />
+De aansturing ga ik doen via de Arduino, dit biedt de mogelijkheid om de controller zo persoonlijk mogelijk te maken. Ik wil dit graag omdat ik de software in de toekomst eventueel ook voor andere toegankelijk wil maken, maar ook omdat ik sensoren wil uitlezen als controle middel voor mijzelf.</div>
+<h4 class="paragraph_"><a id='magicparlabel-11' />
+Core:</h4>
+<div class="standard"><a id='magicparlabel-12' />
+De implantatie van de FAUST-code is te bereiken met een wrapper. FAUST geeft namelijk zelf c++ code terug. Deze code is echter alleen maar berekening en GUI elemtenten. De audio call-back moet er dus in en de GUI moet er uit gehaald worden.In plaats van de GUI wil ik een terminal app die listener heeft die op een array wacht waar de variabelen in staan die de FAUST code nodig heeft.</div>
+<h3 class="subsection_"><a id='magicparlabel-13' />
+Planning</h3>
+<div class="standard"><a id='magicparlabel-14' />
+10-02-2015</div>
+
+<div class="standard"><a id='magicparlabel-15' />
+Research doen naar uiteindelijke aanpak
+<br />
+
+17-02-2015</div>
+
+<div class="standard"><a id='magicparlabel-16' />
+Arduino uitlezen met c++ (testcase met 2 sensoren)
+<br />
+
+24-02-2015</div>
+
+<div class="standard"><a id='magicparlabel-17' />
+Terminal executable wrapper voor FAUST
+<br />
+
+03-03-2015</div>
+
+<div class="standard"><a id='magicparlabel-18' />
+Terminal executable wrapper voor FAUST
+<br />
+
+07-03-2015</div>
+
+<div class="standard"><a id='magicparlabel-19' />
+Kopperling tussen Arduino programma en FAUST terminal executable.
+<br />
+
+</div>
+
+<div class="standard"><a id='magicparlabel-20' />
+<br />
+</div>
+<h1 class="part_"><a id='magicparlabel-21' />
+Written Code</h1>
+<h2 class="section_"><a id='magicparlabel-22' />
+Communication</h2>
+<h3 class="subsection_"><a id='magicparlabel-23' />
+Code that reads from the serial &ldquo;file&rdquo; (in development) :</h3>
+<div class="standard"><a id='magicparlabel-24' />
+</div>
+<h3 class="subsection_"><a id='magicparlabel-29' />
+Arduino Code that writes to the serial &ldquo;file&rdquo; (in development):</h3>
+<div class="standard"><a id='magicparlabel-30' />
+/*
+  AnalogReadSerial
+  Reads an analog input on pin 0, prints the result to the serial monitor.
+  Attach the center pin of a potentiometer to pin A0, and the outside pins to +5V and ground.
+ 
+ This example code is in the public domain.
+ */
+
+// the setup routine runs once when you press reset:
+ int counter = 100; //counter as test when no sensors are connected(initial)
+void setup() {
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  // read the input on analog pin 0:
+  float sensorValue = analogRead(A0);
+  
+  counter = counter; //+1; //counting
+  if(counter &gt; 10000){
+    counter = 0;} //endif
+    
+  // print out the value you read:
+  Serial.write(counter);
+  //Serial.println(sensorValue);
+  Serial.println(counter);
+  delay(1);        // delay in between reads for stability
+}
+</div>
+<h4 class="paragraph_"><a id='magicparlabel-31' />
+This is code will later be modified for udoo and arduino due and instead of a counter sensor reading.</h4>
+<h2 class="section_"><a id='magicparlabel-32' />
+Wrapper</h2>
+<div class="standard"><a id='magicparlabel-33' />
+-&gt; more to come</div>
+<h2 class="section_"><a id='magicparlabel-34' />
+Faust and other DSP Files</h2>
+<div class="standard"><a id='magicparlabel-35' />
+-&gt; more to come</div>
+</body>
+</html>

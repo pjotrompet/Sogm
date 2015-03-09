@@ -1,0 +1,366 @@
+//-----------------------------------------------------
+//
+// Code generated with Faust 0.9.71 (http://faust.grame.fr)
+//-----------------------------------------------------
+/* link with  */
+#ifndef FAUSTFLOAT
+#define FAUSTFLOAT float
+#endif  
+
+typedef long double quad;
+
+#ifndef FAUSTCLASS 
+#define FAUSTCLASS mydsp
+#endif
+
+class mydsp : public dsp, public Runnable {
+  private:
+	quad 	fZec0[32];
+	FAUSTFLOAT 	fslider0;
+	quad 	fRec0[512];
+	int 	fRec0_idx;
+	int 	fRec0_idx_save;
+	quad 	fRec1[2048];
+	int 	fRec1_idx;
+	int 	fRec1_idx_save;
+	quad 	fRec2[2048];
+	int 	fRec2_idx;
+	int 	fRec2_idx_save;
+	quad 	fRec3[4096];
+	int 	fRec3_idx;
+	int 	fRec3_idx_save;
+	quad 	fRec4[4096];
+	int 	fRec4_idx;
+	int 	fRec4_idx_save;
+	quad 	fZec1[32];
+	quad 	fRec5[512];
+	int 	fRec5_idx;
+	int 	fRec5_idx_save;
+	quad 	fRec6[2048];
+	int 	fRec6_idx;
+	int 	fRec6_idx_save;
+	quad 	fRec7[4096];
+	int 	fRec7_idx;
+	int 	fRec7_idx_save;
+	quad 	fRec8[1024];
+	int 	fRec8_idx;
+	int 	fRec8_idx_save;
+	quad 	fRec9[4096];
+	int 	fRec9_idx;
+	int 	fRec9_idx_save;
+	TaskGraph fGraph;
+	FAUSTFLOAT** input;
+	FAUSTFLOAT** output;
+	volatile bool fIsFinished;
+	int fCount;
+	int fIndex;
+	DSPThreadPool* fThreadPool;
+	int fStaticNumThreads;
+	int fDynamicNumThreads;
+  public:
+	static void metadata(Meta* m) 	{ 
+		m->declare("math.lib/name", "Math Library");
+		m->declare("math.lib/author", "GRAME");
+		m->declare("math.lib/copyright", "GRAME");
+		m->declare("math.lib/version", "1.0");
+		m->declare("math.lib/license", "LGPL with exception");
+	}
+
+	virtual ~mydsp() 	{ DSPThreadPool::Destroy(); }
+	virtual int getNumInputs() 	{ return 2; }
+	virtual int getNumOutputs() 	{ return 2; }
+	static void classInit(int samplingFreq) {
+	}
+	virtual void instanceInit(int samplingFreq) {
+		fSamplingFreq = samplingFreq;
+		fslider0 = 0.81L;
+		for (int i=0; i<512; i++) fRec0[i]=0;
+		fRec0_idx = 0;
+		fRec0_idx_save = 0;
+		for (int i=0; i<2048; i++) fRec1[i]=0;
+		fRec1_idx = 0;
+		fRec1_idx_save = 0;
+		for (int i=0; i<2048; i++) fRec2[i]=0;
+		fRec2_idx = 0;
+		fRec2_idx_save = 0;
+		for (int i=0; i<4096; i++) fRec3[i]=0;
+		fRec3_idx = 0;
+		fRec3_idx_save = 0;
+		for (int i=0; i<4096; i++) fRec4[i]=0;
+		fRec4_idx = 0;
+		fRec4_idx_save = 0;
+		for (int i=0; i<512; i++) fRec5[i]=0;
+		fRec5_idx = 0;
+		fRec5_idx_save = 0;
+		for (int i=0; i<2048; i++) fRec6[i]=0;
+		fRec6_idx = 0;
+		fRec6_idx_save = 0;
+		for (int i=0; i<4096; i++) fRec7[i]=0;
+		fRec7_idx = 0;
+		fRec7_idx_save = 0;
+		for (int i=0; i<1024; i++) fRec8[i]=0;
+		fRec8_idx = 0;
+		fRec8_idx_save = 0;
+		for (int i=0; i<4096; i++) fRec9[i]=0;
+		fRec9_idx = 0;
+		fRec9_idx_save = 0;
+		fStaticNumThreads = get_max_cpu();
+		fDynamicNumThreads = getenv("OMP_NUM_THREADS") ? atoi(getenv("OMP_NUM_THREADS")) : fStaticNumThreads;
+		fThreadPool = DSPThreadPool::Init();
+		fThreadPool->StartAll(fStaticNumThreads - 1, false);
+	}
+	virtual void init(int samplingFreq) {
+		classInit(samplingFreq);
+		instanceInit(samplingFreq);
+	}
+	virtual void buildUserInterface(UI* interface) {
+		interface->openVerticalBox("0x00");
+		interface->addHorizontalSlider("Roomsize", &fslider0, 0.81L, 0.0L, 1.2L, 0.01L);
+		interface->closeBox();
+	}
+	void display() {
+		fGraph.Display();
+	}
+	virtual void compute (int count, FAUSTFLOAT** input, FAUSTFLOAT** output) {
+		GetRealTime();
+		this->input = input;
+		this->output = output;
+		StartMeasure();
+		int fullcount = count;
+		for (fIndex = 0; fIndex < fullcount; fIndex += 32) {
+			fCount = min (32, fullcount-fIndex);
+			TaskQueue::Init();
+			// Initialize end task, if more than one input
+			fGraph.InitTask(1,2);
+			// Only initialize taks with more than one input
+			fGraph.InitTask(14,5);
+			fGraph.InitTask(15,5);
+			fIsFinished = false;
+			fThreadPool->SignalAll(fDynamicNumThreads - 1, this);
+			computeThread(0);
+			while (!fThreadPool->IsFinished()) {}
+		}
+		StopMeasure(fStaticNumThreads, fDynamicNumThreads);
+	}
+	void computeThread(int cur_thread) {
+		int count = fCount;
+		quad 	fSlow0 = min((quad)2, max((quad)0, quad(fslider0)));
+		// Init graph state
+		{
+			TaskQueue taskqueue(cur_thread);
+			int tasknum = -1;
+			// Init input and output
+			FAUSTFLOAT* input0 = &input[0][fIndex];
+			FAUSTFLOAT* input1 = &input[1][fIndex];
+			FAUSTFLOAT* output0 = &output[0][fIndex];
+			FAUSTFLOAT* output1 = &output[1][fIndex];
+			int task_list_size = 2;
+			int task_list[2] = {2,3};
+			taskqueue.InitTaskList(task_list_size, task_list, fDynamicNumThreads, cur_thread, tasknum);
+			while (!fIsFinished) {
+				switch (tasknum) {
+					case WORK_STEALING_INDEX: { 
+						tasknum = TaskQueue::GetNextTask(cur_thread, fDynamicNumThreads);
+						break;
+					} 
+					case LAST_TASK_INDEX: { 
+						fIsFinished = true;
+						break;
+					} 
+					// SECTION : 1
+					case 2: { 
+						// LOOP 0x3211c90
+						// exec code
+						for (int i=0; i<count; i++) {
+							fZec0[i] = (1.2L * (quad)input0[i]);
+						}
+						
+						taskqueue.PushHead(5);
+						taskqueue.PushHead(6);
+						taskqueue.PushHead(7);
+						taskqueue.PushHead(8);
+						tasknum = 4;
+						break;
+					} 
+					case 3: { 
+						// LOOP 0x3218610
+						// exec code
+						for (int i=0; i<count; i++) {
+							fZec1[i] = (1.2L * (quad)input1[i]);
+						}
+						
+						taskqueue.PushHead(10);
+						taskqueue.PushHead(11);
+						taskqueue.PushHead(12);
+						taskqueue.PushHead(13);
+						tasknum = 9;
+						break;
+					} 
+					// SECTION : 2
+					case 4: { 
+						// LOOP 0x3211850
+						// pre processing
+						fRec0_idx = (fRec0_idx+fRec0_idx_save)&511;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec0[(fRec0_idx+i)&511] = ((fSlow0 * fRec0[(fRec0_idx+i-302)&511]) + fZec0[i]);
+						}
+						// post processing
+						fRec0_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 14, tasknum);
+						break;
+					} 
+					case 5: { 
+						// LOOP 0x3213b00
+						// pre processing
+						fRec1_idx = (fRec1_idx+fRec1_idx_save)&2047;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec1[(fRec1_idx+i)&2047] = (fZec0[i] + (fSlow0 * fRec1[(fRec1_idx+i-1026)&2047]));
+						}
+						// post processing
+						fRec1_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 14, tasknum);
+						break;
+					} 
+					case 6: { 
+						// LOOP 0x3214860
+						// pre processing
+						fRec2_idx = (fRec2_idx+fRec2_idx_save)&2047;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec2[(fRec2_idx+i)&2047] = (fZec0[i] + (fSlow0 * fRec2[(fRec2_idx+i-1724)&2047]));
+						}
+						// post processing
+						fRec2_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 14, tasknum);
+						break;
+					} 
+					case 7: { 
+						// LOOP 0x3215680
+						// pre processing
+						fRec3_idx = (fRec3_idx+fRec3_idx_save)&4095;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec3[(fRec3_idx+i)&4095] = (fZec0[i] + (fSlow0 * fRec3[(fRec3_idx+i-2914)&4095]));
+						}
+						// post processing
+						fRec3_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 14, tasknum);
+						break;
+					} 
+					case 8: { 
+						// LOOP 0x32164a0
+						// pre processing
+						fRec4_idx = (fRec4_idx+fRec4_idx_save)&4095;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec4[(fRec4_idx+i)&4095] = (fZec0[i] + (fSlow0 * fRec4[(fRec4_idx+i-2601)&4095]));
+						}
+						// post processing
+						fRec4_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 14, tasknum);
+						break;
+					} 
+					case 9: { 
+						// LOOP 0x3218350
+						// pre processing
+						fRec5_idx = (fRec5_idx+fRec5_idx_save)&511;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec5[(fRec5_idx+i)&511] = ((fSlow0 * fRec5[(fRec5_idx+i-462)&511]) + fZec1[i]);
+						}
+						// post processing
+						fRec5_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 15, tasknum);
+						break;
+					} 
+					case 10: { 
+						// LOOP 0x32197d0
+						// pre processing
+						fRec6_idx = (fRec6_idx+fRec6_idx_save)&2047;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec6[(fRec6_idx+i)&2047] = (fZec1[i] + (fSlow0 * fRec6[(fRec6_idx+i-1318)&2047]));
+						}
+						// post processing
+						fRec6_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 15, tasknum);
+						break;
+					} 
+					case 11: { 
+						// LOOP 0x321a610
+						// pre processing
+						fRec7_idx = (fRec7_idx+fRec7_idx_save)&4095;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec7[(fRec7_idx+i)&4095] = (fZec1[i] + (fSlow0 * fRec7[(fRec7_idx+i-2318)&4095]));
+						}
+						// post processing
+						fRec7_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 15, tasknum);
+						break;
+					} 
+					case 12: { 
+						// LOOP 0x321b430
+						// pre processing
+						fRec8_idx = (fRec8_idx+fRec8_idx_save)&1023;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec8[(fRec8_idx+i)&1023] = (fZec1[i] + (fSlow0 * fRec8[(fRec8_idx+i-507)&1023]));
+						}
+						// post processing
+						fRec8_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 15, tasknum);
+						break;
+					} 
+					case 13: { 
+						// LOOP 0x321c240
+						// pre processing
+						fRec9_idx = (fRec9_idx+fRec9_idx_save)&4095;
+						// exec code
+						for (int i=0; i<count; i++) {
+							fRec9[(fRec9_idx+i)&4095] = (fZec1[i] + (fSlow0 * fRec9[(fRec9_idx+i-3132)&4095]));
+						}
+						// post processing
+						fRec9_idx_save = count;
+						
+						fGraph.ActivateOneOutputTask(taskqueue, 15, tasknum);
+						break;
+					} 
+					case 14: { 
+						// LOOP 0x3211610
+						// exec code
+						for (int i=0; i<count; i++) {
+							output0[i] = (FAUSTFLOAT)((((fRec0[(fRec0_idx+i)&511] + fRec1[(fRec1_idx+i)&2047]) + fRec2[(fRec2_idx+i)&2047]) + fRec3[(fRec3_idx+i)&4095]) + fRec4[(fRec4_idx+i)&4095]);
+						}
+						
+						fGraph.ActivateOneOutputTask(taskqueue, LAST_TASK_INDEX, tasknum);
+						break;
+					} 
+					case 15: { 
+						// LOOP 0x3218110
+						// exec code
+						for (int i=0; i<count; i++) {
+							output1[i] = (FAUSTFLOAT)((((fRec5[(fRec5_idx+i)&511] + fRec6[(fRec6_idx+i)&2047]) + fRec7[(fRec7_idx+i)&4095]) + fRec8[(fRec8_idx+i)&1023]) + fRec9[(fRec9_idx+i)&4095]);
+						}
+						
+						fGraph.ActivateOneOutputTask(taskqueue, LAST_TASK_INDEX, tasknum);
+						break;
+					} 
+				}
+			}
+		}
+	}
+};
+
+

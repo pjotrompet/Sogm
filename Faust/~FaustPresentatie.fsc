@@ -1,0 +1,7 @@
+<!DOCTYPE GraphicsSceneFaust>
+<SceneRoot>
+ <Scene sceneHeight="400" viewZoom="1" sceneX="-327" sceneY="-200" sceneWidth="527" viewX="-54" viewY="60"/>
+ <Item DomFaustItemRectWidth="100" ItemX="-300,5" ItemY="4,5" ItemZ="2" file="/home/pjotr/sogm/Faust/Presentatie/simplelow.dsp" DomFaustItemRectHeight="100"/>
+ <Item DomFaustItemRectWidth="100" ItemX="-196,5" ItemY="12,5" ItemZ="1" file="/home/pjotr/sogm/Faust/Presentatie/moresimplelow.dsp" DomFaustItemRectHeight="100"/>
+ <Item DomFaustItemRectWidth="100" ItemX="-42,5" ItemY="8,5" ItemZ="0" file="/home/pjotr/sogm/Faust/Presentatie/init.dsp" DomFaustItemRectHeight="100"/>
+</SceneRoot>

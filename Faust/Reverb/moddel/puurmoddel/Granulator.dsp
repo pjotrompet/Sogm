@@ -11,7 +11,7 @@ dLength = hslider("delay length", 10, 0.5, 10, 0.1);
 SR = fconstant(int fSamplingFreq, <math.h>);
 counter = +(1)%delayLength~_; // to iterate through the delay line
 delayBufferSize = 480000;
-maxN = 128;
+maxN = 12;//128;
 
 //Granular synth variables
 grainLength = int(SR*gLength);

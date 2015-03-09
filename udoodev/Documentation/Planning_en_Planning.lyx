@@ -257,5 +257,16 @@ Faust and other DSP Files
 -> more to come
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Old_Faus_Code"
+target "http://student-kmt.hku.nl/~pjotr/FaustPrograms/"
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
